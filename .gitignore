@@ -38,3 +38,7 @@ out/
 
 ### Kotlin ###
 .kotlin
+
+### Kandy ###
+.lets-plot-images/
+/**/lets-plot-images/
