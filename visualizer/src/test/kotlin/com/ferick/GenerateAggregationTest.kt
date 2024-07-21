@@ -2,18 +2,22 @@ package com.ferick
 
 import com.ferick.generator.AggregationGenerator
 import com.ferick.model.PlotType
+import com.ferick.service.DataFrameService
 import com.ferick.service.PlotService
+import com.ferick.service.impl.DataFrameServiceImpl
 import com.ferick.service.impl.PlotServiceImpl
 import org.jetbrains.kotlinx.kandy.letsplot.export.save
 import org.junit.jupiter.api.Test
 
 class GenerateAggregationTest {
 
+    private val dataFrameService: DataFrameService = DataFrameServiceImpl()
     private val plotService: PlotService = PlotServiceImpl()
 
     @Test
     fun generate() {
-        val plots = plotService.getPlots(AggregationGenerator.generate())
+        val visualData = dataFrameService.getVisualData(AggregationGenerator.generate())
+        val plots = plotService.getPlots(visualData)
         plots[PlotType.PAGE_VISITORS_COUNT]?.get(PlotType.UNIQUE_KEY)?.save("visitors.png")
         plots[PlotType.PAGE_VIEW_COUNT]?.forEach { (page, plot) ->
             val pageName = page.substring(1)
