@@ -29,16 +29,16 @@ class PlotServiceImpl : PlotService {
         val viewCounts = mutableMapOf<String, MutableList<Int>>()
         val viewPeriods = mutableMapOf<String, MutableList<Long>>()
         data.forEachIndexed { index, dataItem ->
-            viewCounts.fillMissedPagesCountWithZeroValues(dataItem.pageStats)
-            viewPeriods.fillMissedPagesPeriodWithZeroValues(dataItem.pageStats)
+            viewCounts.fillMissedPages(dataItem.pageStats) { it.add(DEFAULT_VALUE.toInt()) }
+            viewPeriods.fillMissedPages(dataItem.pageStats) { it.add(DEFAULT_VALUE) }
             visitors.add(dataItem.visitorNumber)
             dataItem.pageStats.forEach { (page, stats) ->
-                viewCounts.updateCount(page, stats, index)
-                viewPeriods.updatePeriod(page, stats, index)
+                viewCounts.update(page, stats.viewCount, index, DEFAULT_VALUE.toInt())
+                viewPeriods.update(page, stats.viewPeriod, index, DEFAULT_VALUE)
             }
         }
         val visitorPlot = getVisitorPlot(minutes, visitors, plotStartTime, plotEndTime)
-        plots[PlotType.PAGE_VISITORS_COUNT] = mapOf("unique" to visitorPlot)
+        plots[PlotType.PAGE_VISITORS_COUNT] = mapOf(PlotType.UNIQUE_KEY to visitorPlot)
         val viewCountPlots = getViewCountPlots(minutes, viewCounts, plotStartTime, plotEndTime)
         plots[PlotType.PAGE_VIEW_COUNT] = viewCountPlots
         val viewPeriodPlots = getViewPeriodPlots(minutes, viewPeriods, plotStartTime, plotEndTime)
@@ -133,43 +133,29 @@ class PlotServiceImpl : PlotService {
         }
     }
 
-    private fun MutableMap<String, MutableList<Int>>.updateCount(page: String, pageStat: PageStat, index: Int) =
+    private fun <T> MutableMap<String, MutableList<T>>.update(page: String, element: T, index: Int, default: T) =
         this.compute(page) { _, count ->
             count?.apply {
-                this.add(pageStat.viewCount)
+                this.add(element)
             } ?: run {
-                (0 until index).map { 0 }.toMutableList().also {
-                    it.add(pageStat.viewCount)
+                (0 until index).map { default }.toMutableList().also {
+                    it.add(element)
                 }
             }
         }
 
-    private fun MutableMap<String, MutableList<Long>>.updatePeriod(page: String, pageStat: PageStat, index: Int) =
-        this.compute(page) { _, count ->
-            count?.apply {
-                this.add(pageStat.viewPeriod)
-            } ?: run {
-                (0 until index).map { 0L }.toMutableList().also {
-                    it.add(pageStat.viewPeriod)
-                }
-            }
-        }
+    private fun <T> MutableMap<String, MutableList<T>>.fillMissedPages(
+        pageStats: Map<String, PageStat>,
+        block: (MutableList<T>) -> Boolean
+    ) = this.filterNot { entry ->
+        pageStats.containsKey(entry.key)
+    }.forEach { (_, stats) ->
+        block.invoke(stats)
+    }
 
-    private fun MutableMap<String, MutableList<Int>>.fillMissedPagesCountWithZeroValues(pageStats: Map<String, PageStat>) =
-        this.filterNot { entry ->
-            pageStats.containsKey(entry.key)
-        }.forEach { (_, stats) ->
-            stats.add(0)
-        }
-
-    private fun MutableMap<String, MutableList<Long>>.fillMissedPagesPeriodWithZeroValues(pageStats: Map<String, PageStat>) =
-        this.filterNot { entry ->
-            pageStats.containsKey(entry.key)
-        }.forEach { (_, stats) ->
-            stats.add(0L)
-        }
 
     companion object {
+        private const val DEFAULT_VALUE = 0L
         private val pattern = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT, FormatStyle.SHORT)
 
         private fun formatDateTime(dateTime: String): String = LocalDateTime.parse(dateTime).format(pattern)

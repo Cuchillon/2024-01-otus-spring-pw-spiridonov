@@ -14,7 +14,7 @@ class GenerateAggregationTest {
     @Test
     fun generate() {
         val plots = plotService.getPlots(AggregationGenerator.generate())
-        plots[PlotType.PAGE_VISITORS_COUNT]?.get("unique")?.save("visitors.png")
+        plots[PlotType.PAGE_VISITORS_COUNT]?.get(PlotType.UNIQUE_KEY)?.save("visitors.png")
         plots[PlotType.PAGE_VIEW_COUNT]?.forEach { (page, plot) ->
             val pageName = page.substring(1)
             plot.save("page_views_$pageName.png")
