@@ -1,7 +1,7 @@
 package com.ferick
 
 import com.ferick.generator.AggregationGenerator
-import com.ferick.model.PlotType
+import com.ferick.model.dto.PlotType
 import com.ferick.service.DataFrameService
 import com.ferick.service.PlotService
 import com.ferick.service.impl.DataFrameServiceImpl

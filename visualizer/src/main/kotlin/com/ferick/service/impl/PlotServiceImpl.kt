@@ -1,7 +1,7 @@
 package com.ferick.service.impl
 
-import com.ferick.model.PlotType
-import com.ferick.model.VisualData
+import com.ferick.model.dto.PlotType
+import com.ferick.model.dto.VisualData
 import com.ferick.service.PlotService
 import org.jetbrains.kotlinx.dataframe.AnyFrame
 import org.jetbrains.kotlinx.kandy.dsl.plot

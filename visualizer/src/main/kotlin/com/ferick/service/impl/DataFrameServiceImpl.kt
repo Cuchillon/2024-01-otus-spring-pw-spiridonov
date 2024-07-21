@@ -2,8 +2,8 @@ package com.ferick.service.impl
 
 import com.ferick.common.model.AggregatedSiteData
 import com.ferick.common.model.PageStat
-import com.ferick.model.PlotType
-import com.ferick.model.VisualData
+import com.ferick.model.dto.PlotType
+import com.ferick.model.dto.VisualData
 import com.ferick.service.DataFrameService
 import org.jetbrains.kotlinx.dataframe.AnyFrame
 import org.jetbrains.kotlinx.dataframe.api.dataFrameOf

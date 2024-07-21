@@ -1,4 +1,4 @@
-package com.ferick.model
+package com.ferick.model.dto
 
 enum class PlotType {
     PAGE_VISITORS_COUNT,

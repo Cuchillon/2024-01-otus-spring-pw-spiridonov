@@ -1,4 +1,4 @@
-package com.ferick.model
+package com.ferick.model.dto
 
 import org.jetbrains.kotlinx.dataframe.AnyFrame
 import java.util.EnumMap
