@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Data visualizer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body>
+<h1>Data visualizer</h1>
+
+<div>
+    <div>
+        <p>
+            Please, <span>select the period you want in the available time interval</span>
+        </p>
+    </div>
+    <div th:text="${#temporals.format(startTime, 'yyyy-MM-dd HH:mm')}">Start time</div>
+    <div th:text="${#temporals.format(endTime, 'yyyy-MM-dd HH:mm')}">End time</div>
+</div>
+
+<form action="index.html" th:action="@{/period}" th:method="post" th:object="${request}">
+    <div>
+        <label for="start-time-input">Start time</label><br>
+        <input id="start-time-input" name="start-time" type="datetime-local" th:field="*{startTime}" />
+        <div th:if="${#fields.hasErrors('startTime')}" th:errors="*{startTime}">Wrong start time</div>
+    </div>
+    <div>
+        <label for="end-time-input">End time</label><br>
+        <input id="end-time-input" name="end-time" type="datetime-local" th:field="*{endTime}" />
+        <div th:if="${#fields.hasErrors('endTime')}" th:errors="*{endTime}">Wrong end time</div>
+    </div>
+
+    <div>
+        <button type="submit">Send</button>
+    </div>
+</form>
+
+</body>
+</html>

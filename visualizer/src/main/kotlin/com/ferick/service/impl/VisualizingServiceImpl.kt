@@ -3,6 +3,7 @@ package com.ferick.service.impl
 import com.ferick.converters.AggregatedSiteDataConverter
 import com.ferick.exceptions.NoSiteDataException
 import com.ferick.exceptions.UnavailablePeriodException
+import com.ferick.model.dto.PeriodRequest
 import com.ferick.model.dto.PlotType
 import com.ferick.repositories.AggregatedSiteDataRepository
 import com.ferick.service.DataFrameService
@@ -33,10 +34,9 @@ class VisualizingServiceImpl(
         return startTime to endTime
     }
 
-    override fun visualizeDataBetween(
-        startTime: LocalDateTime,
-        endTime: LocalDateTime
-    ): EnumMap<PlotType, List<Path>> {
+    override fun visualizeDataBetween(request: PeriodRequest): EnumMap<PlotType, List<Path>> {
+        val startTime = LocalDateTime.parse(request.startTime)
+        val endTime = LocalDateTime.parse(request.endTime)
         val paths = EnumMap<PlotType, List<Path>>(PlotType::class.java)
         checkStartTimeBetweenAvailablePeriod(startTime)
         checkEndTimeBetweenAvailablePeriod(endTime)
