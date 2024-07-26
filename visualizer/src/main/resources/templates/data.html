@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Data visualizer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body>
+<h1>Data for period</h1>
+
+<div>
+    <div th:text="${#temporals.format(startTime, 'yyyy-MM-dd HH:mm')}">Start time</div>
+    <div th:text="${#temporals.format(endTime, 'yyyy-MM-dd HH:mm')}">End time</div>
+</div>
+
+<div>
+    <img src="" th:src="@{/images/{name}(name=${visitors})}" alt="Image">
+</div>
+
+<div th:each="viewCount : ${viewCounts}">
+    <div>
+        <img src="" th:src="@{/images/{name}(name=${viewCount})}" alt="Image">
+    </div>
+</div>
+
+<div th:each="viewPeriod : ${viewPeriods}">
+    <div>
+        <img src="" th:src="@{/images/{name}(name=${viewPeriod})}" alt="Image">
+    </div>
+</div>
+
+</body>
+</html>

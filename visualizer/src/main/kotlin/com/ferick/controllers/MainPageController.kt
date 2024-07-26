@@ -1,6 +1,7 @@
 package com.ferick.controllers
 
 import com.ferick.model.dto.PeriodRequest
+import com.ferick.model.dto.PlotType
 import com.ferick.service.VisualizingService
 import jakarta.validation.Valid
 import org.springframework.stereotype.Controller
@@ -33,7 +34,14 @@ class MainPageController(
         if (bindingResult.hasErrors()) {
             return "index"
         }
-        val imagePaths = visualizingService.visualizeDataBetween(request)
+        val periodData = visualizingService.visualizeDataBetween(request)
+        model.addAttribute("startTime", periodData.startTime)
+        model.addAttribute("endTime", periodData.endTime)
+        model.addAttribute(
+            "visitors", periodData.imageNames[PlotType.PAGE_VISITORS_COUNT]!![0]
+        )
+        model.addAttribute("viewCounts", periodData.imageNames[PlotType.PAGE_VIEW_COUNT]!!)
+        model.addAttribute("viewPeriods", periodData.imageNames[PlotType.PAGE_VIEW_PERIOD]!!)
         return "data"
     }
 }
