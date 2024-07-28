@@ -16,3 +16,17 @@ spring:
 source:
   topicName: "output-topic"
   pollingPeriod: 10
+
+plots:
+  visitors:
+    title: "Number of visitors"
+    width: 2000
+    height: 500
+  viewCounts:
+    title: "Number of views for page"
+    width: 1000
+    height: 500
+  viewPeriods:
+    title: "Number of view period for page"
+    width: 1000
+    height: 500

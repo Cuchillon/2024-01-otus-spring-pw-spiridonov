@@ -1,5 +1,6 @@
 package com.ferick.service.impl
 
+import com.ferick.configuration.properties.PlotProperties
 import com.ferick.model.dto.PlotType
 import com.ferick.model.dto.VisualData
 import com.ferick.service.PlotService
@@ -14,7 +15,9 @@ import org.springframework.stereotype.Service
 import java.util.*
 
 @Service
-class PlotServiceImpl : PlotService {
+class PlotServiceImpl(
+    private val plotProperties: PlotProperties
+) : PlotService {
 
     override fun getPlots(data: VisualData): EnumMap<PlotType, Map<String, Plot>> {
         val plots = EnumMap<PlotType, Map<String, Plot>>(PlotType::class.java)
@@ -58,8 +61,8 @@ class PlotServiceImpl : PlotService {
                 fillColor = Color.RED
                 alpha = 0.7
             }
-            layout.title = "Number of visitors"
-            layout.size = 2000 to 500
+            layout.title = plotProperties.visitors.title
+            layout.size = plotProperties.visitors.width to plotProperties.visitors.height
         }
     }
 
@@ -82,8 +85,8 @@ class PlotServiceImpl : PlotService {
                 fillColor = Color.RED
                 alpha = 0.7
             }
-            layout.title = "Number of views for page ${entry.key}"
-            layout.size = 1000 to 500
+            layout.title = "${plotProperties.viewCounts.title} ${entry.key}"
+            layout.size = plotProperties.viewCounts.width to plotProperties.viewCounts.height
         }
     }
 
@@ -106,8 +109,8 @@ class PlotServiceImpl : PlotService {
                 fillColor = Color.RED
                 alpha = 0.7
             }
-            layout.title = "Number of view period for page ${entry.key}"
-            layout.size = 1000 to 500
+            layout.title = "${plotProperties.viewPeriods.title} ${entry.key}"
+            layout.size = plotProperties.viewPeriods.width to plotProperties.viewPeriods.height
         }
     }
 }
