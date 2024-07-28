@@ -4,3 +4,4 @@ plugins {
 rootProject.name = "2024-01-otus-spring-pw-spiridonov"
 include("common")
 include("visualizer")
+include("runner")

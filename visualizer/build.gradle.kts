@@ -3,6 +3,7 @@ plugins {
     id("io.spring.dependency-management") version "1.1.6"
     kotlin("jvm") version "1.9.24"
     kotlin("plugin.spring") version "1.9.24"
+    id("com.bmuschko.docker-spring-boot-application") version "9.4.0"
 }
 
 java {
@@ -19,6 +20,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.integration:spring-integration-http")
+    implementation("org.springframework.integration:spring-integration-kafka")
     implementation("org.springframework.integration:spring-integration-mongodb")
     implementation("org.thymeleaf.extras:thymeleaf-extras-java8time:3.0.4.RELEASE")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
@@ -38,4 +40,10 @@ kotlin {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+docker {
+    springBootApplication {
+        baseImage.set("openjdk:17.0.2-jdk")
+    }
 }

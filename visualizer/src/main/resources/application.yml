@@ -8,3 +8,11 @@ spring:
       database: admin
       username: admin
       password: password
+  kafka:
+    bootstrap-servers: "localhost:9092"
+    consumer:
+      group-id: 1
+
+source:
+  topicName: "output-topic"
+  pollingPeriod: 10
