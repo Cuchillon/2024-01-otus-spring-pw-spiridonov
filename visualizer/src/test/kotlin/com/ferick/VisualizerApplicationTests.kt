@@ -28,7 +28,6 @@ class VisualizerApplicationTests {
 
 	@BeforeEach
 	fun clearDatabase() {
-		//aggregatedSiteDataRepository.deleteAll()
 		aggregatedSiteDataRepository.count()
 	}
 
@@ -84,7 +83,7 @@ class VisualizerApplicationTests {
 	}
 
 	private fun getAdminClient(bootstrapServers: String): AdminClient {
-		val properties: Properties = Properties()
+		val properties = Properties()
 		properties[AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG] = bootstrapServers
 		return AdminClient.create(properties)
 	}

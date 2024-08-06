@@ -2,7 +2,7 @@ package com.ferick.service.impl
 
 import com.ferick.common.model.SiteEvent
 import com.ferick.configuration.properties.TargetProperties
-import com.ferick.model.SiteEventDto
+import com.ferick.common.model.SiteEventDto
 import com.ferick.service.SiteEventService
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Mono

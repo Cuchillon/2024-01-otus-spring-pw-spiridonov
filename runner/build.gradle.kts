@@ -13,6 +13,8 @@ java {
 
 dependencies {
     implementation(project(":common"))
+    implementation("org.springframework.boot:spring-boot-starter-webflux")
+    implementation("org.springframework.kafka:spring-kafka")
     implementation("org.springframework.boot:spring-boot-starter-test")
     implementation("org.testcontainers:kafka:1.20.0")
     implementation("org.testcontainers:mongodb:1.20.0")
@@ -30,4 +32,14 @@ kotlin {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+tasks {
+    build {
+        val dockerProjects = setOf("receiver", "transformer", "visualizer")
+        val dockerfileTasks = rootProject.subprojects
+            .filter { it.name in dockerProjects }
+            .map { it.tasks.getByName("dockerCreateDockerfile") }.toTypedArray()
+        dependsOn(*dockerfileTasks)
+    }
 }

@@ -15,6 +15,7 @@ java {
 dependencies {
     implementation(project(":common"))
     implementation("org.springframework.boot:spring-boot-starter")
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.kafka:spring-kafka")
     implementation("org.apache.kafka:kafka-streams")
     implementation("org.apache.kafka:kafka-clients")

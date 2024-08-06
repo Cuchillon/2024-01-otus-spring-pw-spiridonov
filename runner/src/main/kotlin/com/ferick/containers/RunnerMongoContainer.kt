@@ -12,6 +12,7 @@ class RunnerMongoContainer(
     init {
         withNetwork(network)
         withNetworkAliases(NETWORK_ALIAS)
+        withExposedPorts(PORT)
     }
 
     override fun getLocalUrl(): String = "mongodb://$username:$password@$host:$firstMappedPort"
@@ -24,7 +25,7 @@ class RunnerMongoContainer(
     }
 
     companion object {
-        private const val IMAGE = "mongo:4.0.10"
+        private const val IMAGE = "mongo:latest"
         const val NETWORK_ALIAS = "mongodb"
         const val PORT = 27017
         const val USERNAME = "admin"

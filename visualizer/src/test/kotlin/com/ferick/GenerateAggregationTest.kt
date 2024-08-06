@@ -1,5 +1,7 @@
 package com.ferick
 
+import com.ferick.configuration.properties.Layout
+import com.ferick.configuration.properties.PlotProperties
 import com.ferick.generator.AggregationGenerator
 import com.ferick.model.dto.PlotType
 import com.ferick.service.DataFrameService
@@ -12,7 +14,13 @@ import org.junit.jupiter.api.Test
 class GenerateAggregationTest {
 
     private val dataFrameService: DataFrameService = DataFrameServiceImpl()
-    private val plotService: PlotService = PlotServiceImpl()
+    private val plotService: PlotService = PlotServiceImpl(
+        PlotProperties(
+            visitors = Layout("Number of visitors", 2000, 500),
+            viewCounts = Layout("Number of views for page", 1000, 500),
+            viewPeriods = Layout("Number of view period for page", 1000, 500)
+        )
+    )
 
     @Test
     fun generate() {

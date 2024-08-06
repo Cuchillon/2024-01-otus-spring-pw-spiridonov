@@ -9,3 +9,15 @@ spring:
 topics:
   sourceTopicName: "input-topic"
   targetTopicName: "output-topic"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: always
+  health:
+    defaults:
+      enabled: true

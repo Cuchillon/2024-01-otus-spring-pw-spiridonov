@@ -14,7 +14,14 @@ class VisualizerContainer(
     init {
         withNetwork(network)
         withNetworkAliases(NETWORK_ALIAS)
+        withExposedPorts(PORT)
         dependsOn(mongoContainer, kafkaContainer)
+        withEnv(
+            mapOf(
+                "SPRING_KAFKA_BOOTSTRAP_SERVERS" to kafkaContainer.getDockerNetworkUrl(),
+                "SPRING_DATA_MONGODB_HOST" to RunnerMongoContainer.NETWORK_ALIAS
+            )
+        )
     }
 
     override fun getLocalUrl(): String = "http://$host:$firstMappedPort"

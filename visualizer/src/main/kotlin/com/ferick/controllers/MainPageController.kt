@@ -1,5 +1,6 @@
 package com.ferick.controllers
 
+import com.ferick.exceptions.NoSiteDataException
 import com.ferick.model.dto.PeriodRequest
 import com.ferick.model.dto.PlotType
 import com.ferick.service.VisualizingService
@@ -17,13 +18,16 @@ class MainPageController(
 ) {
 
     @GetMapping("/")
-    fun getPeriod(model: Model): String {
-        val (startTime, endTime) = visualizingService.getAvailablePeriod()
-        model.addAttribute("startTime", startTime)
-        model.addAttribute("endTime", endTime)
-        model.addAttribute("request", PeriodRequest())
-        return "index"
-    }
+    fun getPeriod(model: Model): String =
+        try {
+            val (startTime, endTime) = visualizingService.getAvailablePeriod()
+            model.addAttribute("startTime", startTime)
+            model.addAttribute("endTime", endTime)
+            model.addAttribute("request", PeriodRequest())
+            "index"
+        } catch (e: NoSiteDataException) {
+            "empty"
+        }
 
     @PostMapping("/period")
     fun sendPeriod(

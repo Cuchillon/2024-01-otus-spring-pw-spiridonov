@@ -1,6 +1,6 @@
 package com.ferick.controllers
 
-import com.ferick.model.SiteEventDto
+import com.ferick.common.model.SiteEventDto
 import com.ferick.service.SiteEventService
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody

@@ -10,6 +10,7 @@ import com.ferick.converters.SiteEventSerde
 import com.ferick.converters.SiteEventTimeExtractor
 import com.ferick.extensions.endTime
 import com.ferick.extensions.startTime
+import com.ferick.service.initializers.AdminInitializer
 import org.apache.kafka.common.serialization.Serdes
 import org.apache.kafka.common.serialization.Serdes.StringSerde
 import org.apache.kafka.common.utils.Bytes
@@ -31,6 +32,7 @@ import org.springframework.boot.autoconfigure.kafka.KafkaProperties
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.DependsOn
 import org.springframework.kafka.annotation.EnableKafka
 import org.springframework.kafka.annotation.EnableKafkaStreams
 import org.springframework.kafka.annotation.KafkaStreamsDefaultConfiguration
@@ -63,8 +65,15 @@ class StreamsConfiguration(
     }
 
     @Bean
-    fun kStream(streamsBuilder: StreamsBuilder): KStream<String, AggregatedSiteData> {
-        val aggregationStream = streamsBuilder.stream(
+    fun adminInitializer(): AdminInitializer = AdminInitializer(
+        kafkaProperties,
+        topicProperties
+    )
+
+    @Bean
+    @DependsOn("adminInitializer")
+    fun kStream(streamsBuilder: StreamsBuilder): KStream<String, AggregatedSiteData> =
+        streamsBuilder.stream(
             topicProperties.sourceTopicName,
             Consumed.with(Serdes.String(), siteEventSerde, siteEventTimeExtractor, Topology.AutoOffsetReset.LATEST)
         )
@@ -99,7 +108,7 @@ class StreamsConfiguration(
                     )
                 )
             }
-        aggregationStream.to(topicProperties.targetTopicName, Produced.valueSerde(aggregatedSiteDataSerde))
-        return aggregationStream
-    }
+            .apply {
+                to(topicProperties.targetTopicName, Produced.valueSerde(aggregatedSiteDataSerde))
+            }
 }

@@ -1,4 +1,4 @@
-package com.ferick.model
+package com.ferick.common.model
 
 data class SiteEventDto(
     val site: String,
