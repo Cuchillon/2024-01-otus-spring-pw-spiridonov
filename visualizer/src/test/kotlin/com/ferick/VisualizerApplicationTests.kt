@@ -28,7 +28,7 @@ class VisualizerApplicationTests {
 
 	@BeforeEach
 	fun clearDatabase() {
-		aggregatedSiteDataRepository.count()
+		aggregatedSiteDataRepository.deleteAll()
 	}
 
 	@Test
