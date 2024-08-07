@@ -7,6 +7,7 @@
     <link rel="stylesheet" type="text/css" href="/static/styles/global.css" th:href="@{/styles/global.css}">
     <link rel="stylesheet" type="text/css" href="/static/styles/main.css" th:href="@{/styles/main.css}">
     <link rel="stylesheet" type="text/css" href="/static/styles/button.css" th:href="@{/styles/button.css}">
+    <link rel="stylesheet" type="text/css" href="/static/styles/errors.css" th:href="@{/styles/errors.css}">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
 <body>
@@ -29,12 +30,12 @@
     <div class="inform">
         <label for="start-time-input"><span>Start time</span></label><br>
         <input id="start-time-input" name="start-time" type="datetime-local" th:field="*{startTime}" />
-        <div th:if="${#fields.hasErrors('startTime')}" th:errors="*{startTime}">Wrong start time</div>
+        <div class="errors" th:if="${#fields.hasErrors('startTime')}" th:errors="*{startTime}">Wrong start time</div>
     </div>
     <div class="inform">
         <label for="end-time-input"><span>End time</span></label><br>
         <input id="end-time-input" name="end-time" type="datetime-local" th:field="*{endTime}" />
-        <div th:if="${#fields.hasErrors('endTime')}" th:errors="*{endTime}">Wrong end time</div>
+        <div class="errors" th:if="${#fields.hasErrors('endTime')}" th:errors="*{endTime}">Wrong end time</div>
     </div>
 
     <div class="inform">

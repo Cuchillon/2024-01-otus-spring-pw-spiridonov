@@ -79,10 +79,10 @@ class PlotServiceImpl(
                 y("viewCounts") {
                     axis.name = "Number of page views"
                 }
-                borderLine.color = Color.ORANGE
+                borderLine.color = Color.LIGHT_BLUE
                 borderLine.type = LineType.BLANK
                 borderLine.width = 1.5
-                fillColor = Color.RED
+                fillColor = Color.BLUE
                 alpha = 0.7
             }
             layout.title = "${plotProperties.viewCounts.title} ${entry.key}"
@@ -103,10 +103,10 @@ class PlotServiceImpl(
                 y("viewPeriods") {
                     axis.name = "Number of page view period"
                 }
-                borderLine.color = Color.ORANGE
+                borderLine.color = Color.LIGHT_GREEN
                 borderLine.type = LineType.BLANK
                 borderLine.width = 1.5
-                fillColor = Color.RED
+                fillColor = Color.GREEN
                 alpha = 0.7
             }
             layout.title = "${plotProperties.viewPeriods.title} ${entry.key}"
