@@ -32,16 +32,23 @@
     </table>
 </div>
 
-<div th:each="viewCount : ${viewCounts}">
-    <div>
-        <img src="" th:src="@{/images/{name}(name=${viewCount})}" alt="Image">
-    </div>
-</div>
-
-<div th:each="viewPeriod : ${viewPeriods}">
-    <div>
-        <img src="" th:src="@{/images/{name}(name=${viewPeriod})}" alt="Image">
-    </div>
+<div>
+    <table class="visitor">
+        <thead>
+        <tr th:each="pageView : ${pageViews}">
+            <th>
+                <div>
+                    <img src="" th:src="@{/images/{name}(name=${pageView.first})}" alt="Image">
+                </div>
+            </th>
+            <th>
+                <div>
+                    <img src="" th:src="@{/images/{name}(name=${pageView.second})}" alt="Image">
+                </div>
+            </th>
+        </tr>
+        </thead>
+    </table>
 </div>
 
 </body>

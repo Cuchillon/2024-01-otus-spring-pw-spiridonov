@@ -44,8 +44,11 @@ class MainPageController(
         model.addAttribute(
             "visitors", periodData.imageNames[PlotType.PAGE_VISITORS_COUNT]!![0]
         )
-        model.addAttribute("viewCounts", periodData.imageNames[PlotType.PAGE_VIEW_COUNT]!!)
-        model.addAttribute("viewPeriods", periodData.imageNames[PlotType.PAGE_VIEW_PERIOD]!!)
+        val viewCounts = periodData.imageNames[PlotType.PAGE_VIEW_COUNT]!!
+        val viewPeriods = periodData.imageNames[PlotType.PAGE_VIEW_PERIOD]!!
+        val pageViews = viewCounts.zip(viewPeriods)
+        model.addAttribute("pageViews", pageViews)
+
         return "data"
     }
 }
