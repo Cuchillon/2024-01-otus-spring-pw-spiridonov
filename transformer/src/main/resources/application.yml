@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: transformer
+  kafka:
+    bootstrap-servers: "localhost:9092"
+    streams:
+      application-id: transformer
+
+topics:
+  sourceTopicName: "input-topic"
+  targetTopicName: "output-topic"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: always
+  health:
+    defaults:
+      enabled: true

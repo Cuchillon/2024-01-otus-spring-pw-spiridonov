@@ -1,0 +1,8 @@
+.visitor {
+  overflow: hidden;
+  width: 60%;
+  margin: 0 auto;
+  display: table;
+  padding-top: 1%;
+  padding-bottom: 1%;
+}

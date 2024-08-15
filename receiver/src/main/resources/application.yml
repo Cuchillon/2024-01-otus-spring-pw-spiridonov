@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: receiver
+  kafka:
+    bootstrap-servers: "localhost:9092"
+    producer:
+      client-id: 1
+
+target:
+  topicName: "input-topic"
